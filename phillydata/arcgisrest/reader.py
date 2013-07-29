@@ -2,7 +2,6 @@ import json
 import logging
 from urllib import urlencode
 from urllib2 import urlopen, URLError
-import traceback
 
 
 logger = logging.getLogger(__name__)
