@@ -12,11 +12,13 @@ Install using `pip <https://pypi.python.org/pypi/pip/1.4>`_, which should get
 any requirements, eg:
 
 ::
+
     pip install git+git://github.com/ebrelsford/django-phillydata@master
 
 Change your Django settings to at least include phillydata:
 
 ::
+
     INSTALLED_APPS += (
         'phillydata',
     )
@@ -24,6 +26,7 @@ Change your Django settings to at least include phillydata:
 include any of the following that you will be using:
 
 ::
+
     INSTALLED_APPS += (
         'phillydata.availableproperties',
         'phillydata.citycouncil',
