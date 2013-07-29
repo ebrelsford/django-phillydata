@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class ODataReader(object):
+    """A simple OData reader that is capable of filtering and pagination."""
 
     def __init__(self, service_url):
         self.service_url = service_url
