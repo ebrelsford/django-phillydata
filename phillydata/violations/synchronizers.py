@@ -2,7 +2,6 @@ import logging
 
 import external_data_sync
 from external_data_sync.synchronizers import Synchronizer
-from lots.load import load_lots_with_violations
 
 from .adapter import find_violations
 
@@ -23,10 +22,6 @@ class LIViolationsSynchronizer(Synchronizer):
         logger.info('Starting to synchronize L&I Violation data.')
         self.update_violation_data()
         logger.info('Finished synchronizing L&I Violation data.')
-
-        logger.info('Adding lots with violations.')
-        load_lots_with_violations()
-        logger.info('Done adding lots with violations.')
 
     def update_violation_data(self):
         for code in self.codes:

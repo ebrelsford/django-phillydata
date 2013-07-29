@@ -1,6 +1,5 @@
 from django.test import TestCase
 
-from lots.models import Lot
 from .models import Owner
 
 
@@ -41,21 +40,3 @@ class ModelTest(TestCase):
 
         owner.make_alias(alias_owner)
         self.assertEquals(owner.aliases.count(), 3)
-
-    def test_make_alias_with_related(self):
-        """
-        Test making an alias out of an owner that has relations on it.
-        """
-        owner = Owner(name='Test Owner', owner_type='public')
-        owner.save()
-
-        alias_owner = Owner(name='Alias of Test Owner', owner_type='public')
-        alias_owner.save()
-
-        lot = Lot(owner=alias_owner)
-        lot.save()
-
-        self.assertEquals(owner.lot_set.count(), 0)
-
-        owner.make_alias(alias_owner)
-        self.assertEquals(owner.lot_set.count(), 1)

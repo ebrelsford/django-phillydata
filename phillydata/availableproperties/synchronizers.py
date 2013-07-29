@@ -2,7 +2,6 @@ import logging
 
 import external_data_sync
 from external_data_sync.synchronizers import Synchronizer
-from lots.load import load_lots_available
 
 from .adapter import (find_available_properties,
                       find_no_longer_available_properties)
@@ -22,9 +21,6 @@ class PRAAvailablePropertiesSynchronizer(Synchronizer):
     'available'), and properties no longer in the PRA's data (status == 'no
     longer available').
 
-    Once the above is accomplished, we load lots for available properties that
-    are new.
-
     """
     def sync(self, data_source):
         logger.info('Synchronizing available properties.')
@@ -34,10 +30,6 @@ class PRAAvailablePropertiesSynchronizer(Synchronizer):
         logger.info('Synchronizing no-longer available properties.')
         find_no_longer_available_properties(data_source.last_synchronized)
         logger.info('Done synchronizing no-longer available properties.')
-
-        logger.info('Adding lots with available properties.')
-        load_lots_available(added_after=data_source.last_synchronized)
-        logger.info('Done adding lots with available properties.')
 
 
 external_data_sync.register(PRAAvailablePropertiesSynchronizer)
