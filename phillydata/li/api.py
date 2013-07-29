@@ -1,4 +1,4 @@
-from odata.reader import ODataReader
+from ..odata.reader import ODataReader
 from .. import utils
 
 

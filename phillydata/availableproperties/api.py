@@ -1,4 +1,4 @@
-from arcgisrest.reader import ArcGISRestServerReader
+from ..arcgisrest.reader import ArcGISRestServerReader
 
 
 class AvailablePropertyReader(ArcGISRestServerReader):
