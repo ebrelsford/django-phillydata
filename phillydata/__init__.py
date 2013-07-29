@@ -7,3 +7,5 @@ These packages, as applicable, have the following modules:
     * .models: local representations of the external data
 
 """
+
+__version__ = '0.1'
