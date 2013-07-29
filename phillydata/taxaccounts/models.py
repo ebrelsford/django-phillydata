@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from vacant_to_vibrant.reversion_utils import InitialRevisionManagerMixin
+from ..reversion_utils import InitialRevisionManagerMixin
 
 
 class TaxAccountManager(InitialRevisionManagerMixin, models.Manager):

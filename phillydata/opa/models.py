@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 import reversion
 
-from vacant_to_vibrant.reversion_utils import InitialRevisionManagerMixin
+from ..reversion_utils import InitialRevisionManagerMixin
 
 
 class AccountOwner(models.Model):
