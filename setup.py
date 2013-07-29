@@ -30,6 +30,9 @@ setup(
     classifiers=CLASSIFIERS,
     install_requires=[
         'Django>=1.3.1',
+        'pyproj==1.9.3',
+        'django-reversion==1.6.6',
+        'django-reversion-compare==0.3.5',
     ],
     packages=find_packages(),
     include_package_data=True,
