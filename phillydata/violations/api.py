@@ -1,4 +1,4 @@
-from phillydata.li.api import LIReader
+from ..li.api import LIReader
 
 
 class LIViolationReader(LIReader):

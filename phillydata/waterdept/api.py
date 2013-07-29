@@ -3,7 +3,7 @@ import logging
 from urllib import urlencode
 from urllib2 import urlopen
 
-from phillydata.utils import to_point
+from ..utils import to_point
 
 
 logger = logging.getLogger(__name__)

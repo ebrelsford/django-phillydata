@@ -3,7 +3,7 @@ import geojson
 from inplace.boundaries.models import Layer
 from inplace.views import GeoJSONListView
 
-from phillydata.parcels.models import Parcel
+from ..parcels.models import Parcel
 
 
 class FindParcelView(GeoJSONListView):

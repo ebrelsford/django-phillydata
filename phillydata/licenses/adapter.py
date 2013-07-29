@@ -2,7 +2,7 @@ import logging
 
 import reversion
 
-from phillydata.li.adapter import get_location
+from ..li.adapter import get_location
 from .api import LILicenseReader
 from .models import Contact, License, LicenseType
 

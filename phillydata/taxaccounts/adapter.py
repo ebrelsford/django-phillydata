@@ -2,7 +2,7 @@ from datetime import datetime
 
 import reversion
 
-from phillydata.opa.models import BillingAccount
+from ..opa.models import BillingAccount
 from ..utils import fix_address
 from .models import TaxAccount
 

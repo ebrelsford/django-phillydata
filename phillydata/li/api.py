@@ -1,5 +1,5 @@
 from odata.reader import ODataReader
-from phillydata import utils
+from .. import utils
 
 
 class LIReader(ODataReader):

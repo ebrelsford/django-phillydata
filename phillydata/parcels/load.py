@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.geos import MultiPolygon, Polygon
 
-from phillydata import utils
+from .. import utils
 from .models import Parcel
 
 
