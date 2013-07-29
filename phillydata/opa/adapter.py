@@ -11,8 +11,8 @@ import reversion
 
 from .api import get_account_data, get_address_data
 from .models import AccountOwner, BillingAccount
-from phillydata.owners.models import Owner
-from vacant_to_vibrant.utils import html_unescape
+from ..owners.models import Owner
+from ..utils import html_unescape
 
 
 logger = logging.getLogger(__name__)
