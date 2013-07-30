@@ -57,5 +57,5 @@ Your pull requests are very welcome! Please follow the established code style.
 License
 -------
 
-django-phillydata is released under the GNU `Affero General Public License, 
-version 3 <http://www.gnu.org/licenses/agpl.html>`_.
+django-phillydata is released under the `BSD license
+<http://opensource.org/licenses/BSD-3-Clause>`_.
