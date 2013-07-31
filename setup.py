@@ -9,7 +9,7 @@ CLASSIFIERS = [
     'Environment :: Web Environment',
     'Framework :: Django',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+    'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
@@ -25,7 +25,7 @@ setup(
                  'the city of Philadelphia.'),
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
     url='https://github.com/ebrelsford/django-phillydata/',
-    license='GNU Affero General Public License v3 or later (AGPLv3+)',
+    license='BSD License',
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
     install_requires=[
