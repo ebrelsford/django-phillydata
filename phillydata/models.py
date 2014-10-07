@@ -1,5 +1,5 @@
-from external_data_sync.models import DataSource
+from external_data_sync.models import BaseDataSource
 
 
-class PhillyDataSource(DataSource):
+class PhillyDataSource(BaseDataSource):
     pass
