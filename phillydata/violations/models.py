@@ -51,6 +51,14 @@ class ViolationType(models.Model):
         unique=True,
     )
 
+    readable_description = models.CharField(_('readable description'),
+        max_length=200,
+        blank=True,
+        null=True,
+        help_text=_('The readable description for this type of violation.'
+                    'This description will be used if available.'),
+    )
+
     li_description = models.TextField(_('L&I description'),
         help_text=_('The description L&I gives for this type of violation.'),
     )
@@ -63,6 +71,12 @@ class ViolationType(models.Model):
 
     def __unicode__(self):
         return u'(%s): %s' % (self.code, self.li_description,)
+
+    def get_description(self):
+        if self.readable_description:
+            return self.readable_description
+        return self.li_description
+    description = property(get_description)
 
 
 class ViolationLocation(models.Model):

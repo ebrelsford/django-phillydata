@@ -16,7 +16,7 @@ class ViolationAdmin(CompareVersionAdmin):
 
 
 class ViolationTypeAdmin(admin.ModelAdmin):
-    list_display = ('code', 'li_description',)
+    list_display = ('code', 'readable_description', 'li_description',)
 
 
 admin.site.register(Violation, ViolationAdmin)
