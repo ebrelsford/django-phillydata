@@ -1,48 +1,36 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'PhillyDataSource'
-        db.create_table(u'phillydata_phillydatasource', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('healthy', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('ordering', self.gf('django.db.models.fields.IntegerField')(default=1)),
-            ('synchronize_in_progress', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('synchronize_frequency', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('next_synchronize', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('last_synchronized', self.gf('django.db.models.fields.DateTimeField')()),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-        ))
-        db.send_create_signal(u'phillydata', ['PhillyDataSource'])
+    dependencies = [
+        ('external_data_sync', '__first__'),
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'PhillyDataSource'
-        db.delete_table(u'phillydata_phillydatasource')
-
-
-    models = {
-        u'phillydata.phillydatasource': {
-            'Meta': {'ordering': "('ordering',)", 'object_name': 'PhillyDataSource'},
-            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'healthy': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_synchronized': ('django.db.models.fields.DateTimeField', [], {}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'next_synchronize': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'ordering': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
-            'synchronize_frequency': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'synchronize_in_progress': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
-        }
-    }
-
-    complete_apps = ['phillydata']
+    operations = [
+        migrations.CreateModel(
+            name='PhillyDataSource',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=50, verbose_name='name')),
+                ('description', models.TextField(null=True, verbose_name='description', blank=True)),
+                ('enabled', models.BooleanField(default=True, verbose_name='enabled')),
+                ('healthy', models.BooleanField(default=True, help_text='Was synchronizing successful last attempt?', verbose_name='healthy')),
+                ('ordering', models.IntegerField(default=1, help_text='The ordering of this source, lower numbers coming first.', verbose_name='ordering')),
+                ('synchronize_in_progress', models.BooleanField(default=False, help_text='Is the source being synchronized right now?', verbose_name='synchronize in progress')),
+                ('synchronize_frequency', models.IntegerField(help_text='The number of hours that should pass between synchronizations of this source.', null=True, verbose_name='synchronize frequency', blank=True)),
+                ('next_synchronize', models.DateTimeField(help_text='The next time this data source should be synchronized.', null=True, verbose_name='next synchronize', blank=True)),
+                ('last_synchronized', models.DateTimeField(help_text='The last time this data source was synchronized', verbose_name='last synchronized')),
+                ('batch_size', models.IntegerField(help_text='The batch size that should be updated each time this source is synchronized', null=True, verbose_name='batch size', blank=True)),
+                ('synchronizer_record', models.ForeignKey(blank=True, to='external_data_sync.SynchronizerRecord', help_text='The synchronizer to use with this data source.', null=True, verbose_name='synchronizer record')),
+            ],
+            options={
+                'ordering': ('ordering',),
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+    ]

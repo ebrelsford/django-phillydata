@@ -1,104 +1,76 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'License'
-        db.create_table(u'licenses_license', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('license_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['licenses.LicenseType'])),
-            ('location', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['li.Location'])),
-            ('primary_contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['licenses.Contact'], null=True, blank=True)),
-            ('issued_datetime', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('inactive_datetime', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('external_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=30)),
-            ('expires_month', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('expires_year', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
-            ('status', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'licenses', ['License'])
+    dependencies = [
+        ('li', '0001_initial'),
+    ]
 
-        # Adding model 'LicenseType'
-        db.create_table(u'licenses_licensetype', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(unique=True, max_length=32)),
-            ('name', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal(u'licenses', ['LicenseType'])
-
-        # Adding model 'Contact'
-        db.create_table(u'licenses_contact', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('contact_type', self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True)),
-            ('company_name', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('address1', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('address2', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('state', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('zip_code', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'licenses', ['Contact'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'License'
-        db.delete_table(u'licenses_license')
-
-        # Deleting model 'LicenseType'
-        db.delete_table(u'licenses_licensetype')
-
-        # Deleting model 'Contact'
-        db.delete_table(u'licenses_contact')
-
-
-    models = {
-        u'li.location': {
-            'Meta': {'object_name': 'Location'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'external_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'point': ('django.contrib.gis.db.models.fields.PointField', [], {}),
-            'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'})
-        },
-        u'licenses.contact': {
-            'Meta': {'object_name': 'Contact'},
-            'address1': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'address2': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'company_name': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'contact_type': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'state': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'})
-        },
-        u'licenses.license': {
-            'Meta': {'object_name': 'License'},
-            'expires_month': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            'expires_year': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'external_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'inactive_datetime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'issued_datetime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'license_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['licenses.LicenseType']"}),
-            'location': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['li.Location']"}),
-            'primary_contact': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['licenses.Contact']", 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'})
-        },
-        u'licenses.licensetype': {
-            'Meta': {'object_name': 'LicenseType'},
-            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.TextField', [], {})
-        }
-    }
-
-    complete_apps = ['licenses']
+    operations = [
+        migrations.CreateModel(
+            name='Contact',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('contact_type', models.CharField(max_length=32, null=True, verbose_name='contact type', blank=True)),
+                ('company_name', models.CharField(max_length=300, null=True, verbose_name='company name', blank=True)),
+                ('first_name', models.CharField(max_length=300, null=True, verbose_name='first name', blank=True)),
+                ('last_name', models.CharField(max_length=300, null=True, verbose_name='last name', blank=True)),
+                ('address1', models.CharField(max_length=300, null=True, verbose_name='address1', blank=True)),
+                ('address2', models.CharField(max_length=300, null=True, verbose_name='address2', blank=True)),
+                ('city', models.CharField(max_length=300, null=True, verbose_name='city', blank=True)),
+                ('state', models.CharField(max_length=100, null=True, verbose_name='state', blank=True)),
+                ('zip_code', models.CharField(max_length=20, null=True, verbose_name='zip code', blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='License',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('issued_datetime', models.DateTimeField(help_text='When this license was issued', null=True, verbose_name='issued date/time', blank=True)),
+                ('inactive_datetime', models.DateTimeField(help_text='When this license became inactive, if it is', null=True, verbose_name='inactive date/time', blank=True)),
+                ('external_id', models.CharField(help_text="L&I's license number for this particular license", unique=True, max_length=30, verbose_name='external ID')),
+                ('expires_month', models.CharField(help_text='The month this license will expire', max_length=30, null=True, verbose_name='month of expiry', blank=True)),
+                ('expires_year', models.PositiveIntegerField(help_text='The year this license will expire', null=True, verbose_name='year of expiry', blank=True)),
+                ('status', models.CharField(help_text='The last-known status of this license', max_length=30, null=True, verbose_name='status', blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='LicenseType',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(help_text='The code L&I uses for this type of license.', unique=True, max_length=32, verbose_name='code')),
+                ('name', models.TextField(help_text='The name L&I gives for this type of license.', verbose_name='name')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='license',
+            name='license_type',
+            field=models.ForeignKey(to='licenses.LicenseType'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='license',
+            name='location',
+            field=models.ForeignKey(to='li.Location'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='license',
+            name='primary_contact',
+            field=models.ForeignKey(blank=True, to='licenses.Contact', help_text='The primary contact for this license', null=True),
+            preserve_default=True,
+        ),
+    ]

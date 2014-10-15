@@ -1,40 +1,28 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.contrib.gis.db.models.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Parcel'
-        db.create_table(u'parcels_parcel', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('geometry', self.gf('django.contrib.gis.db.models.fields.MultiPolygonField')()),
-            ('basereg', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('mapreg', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('stcod', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('address', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'parcels', ['Parcel'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'Parcel'
-        db.delete_table(u'parcels_parcel')
-
-
-    models = {
-        u'parcels.parcel': {
-            'Meta': {'object_name': 'Parcel'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'basereg': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            'geometry': ('django.contrib.gis.db.models.fields.MultiPolygonField', [], {}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'mapreg': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            'stcod': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['parcels']
+    operations = [
+        migrations.CreateModel(
+            name='Parcel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('geometry', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326, verbose_name='geometry')),
+                ('basereg', models.CharField(help_text='The registry number which there is a deed attached to.', max_length=10, null=True, verbose_name='basereg', blank=True)),
+                ('mapreg', models.CharField(help_text='A registry number that may or may not specifically have a deed attached to it.', max_length=10, null=True, verbose_name='mapreg', blank=True)),
+                ('stcod', models.CharField(help_text='Street code. Maintained by the Department of Streets.', max_length=10, null=True, verbose_name='stcod', blank=True)),
+                ('address', models.CharField(help_text='The street address, created by concatenating house number and street fields from the parcel database.', max_length=300, null=True, verbose_name='address', blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+    ]

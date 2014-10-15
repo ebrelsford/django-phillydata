@@ -1,55 +1,44 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.contrib.gis.db.models.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'BaseDistrict'
-        db.create_table(u'zoning_basedistrict', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('geometry', self.gf('django.contrib.gis.db.models.fields.MultiPolygonField')()),
-            ('zoning_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['zoning.ZoningType'])),
-        ))
-        db.send_create_signal(u'zoning', ['BaseDistrict'])
+    dependencies = [
+    ]
 
-        # Adding model 'ZoningType'
-        db.create_table(u'zoning_zoningtype', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('long_code', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('group', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'zoning', ['ZoningType'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'BaseDistrict'
-        db.delete_table(u'zoning_basedistrict')
-
-        # Deleting model 'ZoningType'
-        db.delete_table(u'zoning_zoningtype')
-
-
-    models = {
-        u'zoning.basedistrict': {
-            'Meta': {'object_name': 'BaseDistrict'},
-            'geometry': ('django.contrib.gis.db.models.fields.MultiPolygonField', [], {}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'zoning_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['zoning.ZoningType']"})
-        },
-        u'zoning.zoningtype': {
-            'Meta': {'object_name': 'ZoningType'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'group': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'long_code': ('django.db.models.fields.CharField', [], {'max_length': '30'})
-        }
-    }
-
-    complete_apps = ['zoning']
+    operations = [
+        migrations.CreateModel(
+            name='BaseDistrict',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('geometry', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326, verbose_name='geometry')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ZoningType',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(max_length=30, verbose_name='code')),
+                ('long_code', models.CharField(max_length=30, verbose_name='long code')),
+                ('group', models.CharField(max_length=100, verbose_name='group')),
+                ('description', models.TextField(null=True, verbose_name='description', blank=True)),
+            ],
+            options={
+                'ordering': ('code',),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='basedistrict',
+            name='zoning_type',
+            field=models.ForeignKey(verbose_name='zoning type', to='zoning.ZoningType'),
+            preserve_default=True,
+        ),
+    ]

@@ -1,38 +1,27 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.contrib.gis.db.models.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Location'
-        db.create_table(u'li_location', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('point', self.gf('django.contrib.gis.db.models.fields.PointField')()),
-            ('address', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('zip_code', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
-            ('external_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=30)),
-        ))
-        db.send_create_signal(u'li', ['Location'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'Location'
-        db.delete_table(u'li_location')
-
-
-    models = {
-        u'li.location': {
-            'Meta': {'object_name': 'Location'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
-            'external_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'point': ('django.contrib.gis.db.models.fields.PointField', [], {}),
-            'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['li']
+    operations = [
+        migrations.CreateModel(
+            name='Location',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('point', django.contrib.gis.db.models.fields.PointField(srid=4326, verbose_name='point')),
+                ('address', models.CharField(help_text='The street address, created by concatenating house number and street fields.', max_length=300, null=True, verbose_name='address', blank=True)),
+                ('zip_code', models.CharField(max_length=20, null=True, verbose_name='zip code', blank=True)),
+                ('external_id', models.CharField(help_text="The ID of this location in L&I's API", unique=True, max_length=30, verbose_name='external ID')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+    ]

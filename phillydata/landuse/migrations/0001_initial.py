@@ -1,46 +1,31 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.contrib.gis.db.models.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'LandUseArea'
-        db.create_table(u'landuse_landusearea', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('geometry', self.gf('django.contrib.gis.db.models.fields.MultiPolygonField')()),
-            ('object_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=15)),
-            ('category', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('subcategory', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('vacant_building', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('area', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2, blank=True)),
-            ('added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'landuse', ['LandUseArea'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'LandUseArea'
-        db.delete_table(u'landuse_landusearea')
-
-
-    models = {
-        u'landuse.landusearea': {
-            'Meta': {'object_name': 'LandUseArea'},
-            'added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'area': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '15', 'decimal_places': '2', 'blank': 'True'}),
-            'category': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            'geometry': ('django.contrib.gis.db.models.fields.MultiPolygonField', [], {}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '15'}),
-            'subcategory': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            'vacant_building': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['landuse']
+    operations = [
+        migrations.CreateModel(
+            name='LandUseArea',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('geometry', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326, verbose_name='geometry')),
+                ('object_id', models.CharField(help_text='The object ID (OBJECTID)', unique=True, max_length=15, verbose_name='object ID')),
+                ('category', models.CharField(help_text='The land use category (C_DIG1DESC)', max_length=30, null=True, verbose_name='category', blank=True)),
+                ('subcategory', models.CharField(help_text='The land use subcategory (C_DIG2DESC)', max_length=30, null=True, verbose_name='subcategory', blank=True)),
+                ('description', models.CharField(help_text='The land use description (C_DIG3DESC)', max_length=30, null=True, verbose_name='description', blank=True)),
+                ('vacant_building', models.CharField(help_text='(VACBLDG)', max_length=10, null=True, verbose_name='vacant building', blank=True)),
+                ('area', models.DecimalField(decimal_places=2, max_digits=15, blank=True, help_text='The area of this parcel in square feet', null=True, verbose_name='area')),
+                ('added', models.DateTimeField(help_text=b'The first time this area was seen in the data source', verbose_name='date added', auto_now_add=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+    ]
