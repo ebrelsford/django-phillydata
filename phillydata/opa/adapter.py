@@ -114,6 +114,8 @@ def find_opa_details(address, brt_account=None):
     """Get or create a BillingAccount for the given address."""
     logger.debug('Getting OPA data for address "%s"' % address)
 
+    data = None
+
     # Attempt to get owner by address
     if address:
         data = get_address_data(address)
