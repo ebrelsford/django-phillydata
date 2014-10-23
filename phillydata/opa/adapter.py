@@ -115,7 +115,8 @@ def find_opa_details(address, brt_account=None):
     logger.debug('Getting OPA data for address "%s"' % address)
 
     # Attempt to get owner by address
-    data = get_address_data(address)
+    if address:
+        data = get_address_data(address)
 
     # Attempt to get owner by BRT number
     if brt_account and not data:

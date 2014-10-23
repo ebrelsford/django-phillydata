@@ -4,6 +4,12 @@ import adapter
 from .api import get_address_data
 
 
+class ApiTest(TestCase):
+    
+    def test_address_none(self):
+        self.assertRaises(ValueError, get_address_data, None)
+
+
 class AdapterTest(TestCase):
 
     record = get_address_data('666 Brooklyn St')

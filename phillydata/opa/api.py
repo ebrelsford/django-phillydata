@@ -15,6 +15,8 @@ params = {
 }
 
 def get_address_data(address):
+    if not address:
+        raise ValueError('address must not be None')
     try:
         url = BASE_URL + ADDRESS_ENDPOINT + quote(address) + '/?' + urlencode(params)
         data = json.load(urlopen(url, None, 30))['data']
