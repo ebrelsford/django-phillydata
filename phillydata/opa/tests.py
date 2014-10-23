@@ -1,13 +1,16 @@
 from django.test import TestCase
 
 import adapter
-from .api import get_address_data
+from .api import get_account_data, get_address_data
 
 
 class ApiTest(TestCase):
     
     def test_address_none(self):
         self.assertRaises(ValueError, get_address_data, None)
+
+    def test_get_account_data(self):
+        self.assertIsNotNone(get_account_data('162132100'))
 
 
 class AdapterTest(TestCase):

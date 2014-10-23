@@ -40,7 +40,7 @@ def get_address_data(address):
 
 def get_account_data(account):
     try:
-        url = BASE_URL + ACCOUNT_ENDPOINT + account + '/?' + urlencode(params)
+        url = BASE_URL + ACCOUNT_ENDPOINT + account + '?' + urlencode(params)
         data = json.load(urlopen(url))['data']
         return data['property']
     except Exception:
