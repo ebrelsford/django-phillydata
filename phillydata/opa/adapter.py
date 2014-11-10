@@ -69,20 +69,23 @@ def get_assessment(valuation_history):
 
 
 def billing_account_defaults(characteristics=None, sales_information=None,
-                             valuation_history=None, defaults={}, **kwargs):
+                             valuation_history=None, defaults=None, **kwargs):
+    if not defaults:
+        defaults = {}
     defaults.update({
         'sale_date': json_date_as_datetime(sales_information['sales_date']),
-        'land_area': characteristics['land_area'],
-
-        # TODO NB: if 0, could indicate vacancy
-        'improvement_area': characteristics['improvement_area'],
-
-        # TODO NB: if starts with 'VAC LAND', could indicate vacancy
-        'improvement_description': characteristics['improvement_description'],
-
-        # TODO NB: if 0, could indicate publicly owned?
         'assessment': get_assessment(valuation_history),
     })
+
+    # TODO These characteristics aren't really used currently in regards to
+    # vacancy, but they should be
+    characteristics_keys = ('improvement_area', 'improvement_description',
+                            'land_area')
+    for k in characteristics_keys:
+        try:
+            defaults[k] = characteristics[k]
+        except KeyError:
+            continue
     return defaults
 
 
