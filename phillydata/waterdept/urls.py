@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
 
-from .views import GeoJSONPolygonView
+from .views import GeoJSONParcelListView
 
 
 urlpatterns = patterns('',
-    url(r'^geojson/', GeoJSONPolygonView.as_view(), name='waterparcel_geojson'),
+    url(r'^geojson/', GeoJSONParcelListView.as_view(), name='waterparcel_geojson'),
 )

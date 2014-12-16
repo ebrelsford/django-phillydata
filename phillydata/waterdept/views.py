@@ -7,7 +7,7 @@ from inplace.views import GeoJSONListView
 from .models import WaterParcel
 
 
-class GeoJSONPolygonView(GeoJSONListView):
+class GeoJSONParcelListView(GeoJSONListView):
     model = WaterParcel
 
     def get_feature(self, parcel):
@@ -25,7 +25,7 @@ class GeoJSONPolygonView(GeoJSONListView):
     def get_queryset(self):
         try:
             bbox = Polygon.from_bbox(self.request.GET['bbox'].split(','))
-            return super(GeoJSONPolygonView, self).get_queryset().filter(
+            return super(GeoJSONParcelListView, self).get_queryset().filter(
                 geometry__intersects=bbox,
             ).geojson(precision=6)
         except KeyError:
