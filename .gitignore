@@ -1,5 +1,7 @@
 *.pyc
 *.swp
+phillydata/processed
+phillydata/raw
 /dist
 /MANIFEST
 /django_livinglots_usercontent.egg-info

@@ -1,10 +1,10 @@
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from ..reversion_utils import InitialRevisionManagerMixin
 
 
-class WaterParcelManager(InitialRevisionManagerMixin, models.Manager):
+class WaterParcelManager(InitialRevisionManagerMixin, models.GeoManager):
     pass
 
 
@@ -15,15 +15,17 @@ class WaterParcel(models.Model):
     May not be strictly the same as parcels as defined by Records.
 
     """
-
     objects = WaterParcelManager()
-
-    # TODO shape?
-    #"Shape": "POLYGON ((2703814.74156681 254477.754747897, 2703813.02798755 254463.902413398, 2703743.47825789 254472.777067557, 2703745.30371356 254486.647118554, 2703814.74156681 254477.754747897))",
+    geometry = models.MultiPolygonField(_('geometry'), blank=True, null=True)
 
     # IDs
     parcel_id = models.CharField(_('parcel id'),
         max_length=20,
+        blank=True,
+        null=True,
+        help_text=_('The parcel ID assigned by the Water Dept'),
+    )
+    parcelid = models.IntegerField(_('parcel id (int)'),
         blank=True,
         null=True,
         help_text=_('The parcel ID assigned by the Water Dept'),
@@ -180,3 +182,19 @@ class WaterAccount(models.Model):
     def __unicode__(self):
         return '%s (%s), %s' % (self.account_id, self.account_status,
                                 self.service_type_label)
+
+
+# Mapping only includes data available in the shapefile provided by the Water
+# Department. Other model fields are filled, on demand, using the API.
+waterparcel_mapping = {
+    'parcelid' : 'PARCELID',
+    'ten_code' : 'TENCODE',
+    'address' : 'ADDRESS',
+    'owner1' : 'OWNER1',
+    'owner2' : 'OWNER2',
+    'building_code' : 'BLDG_CODE',
+    'building_description' : 'BLDG_DESC',
+    'brt_account' : 'BRT_ID',
+    'gross_area' : 'GROSS_AREA',
+    'geometry' : 'POLYGON',
+}
