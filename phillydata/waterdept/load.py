@@ -3,7 +3,7 @@ import os
 from django.contrib.gis.utils import LayerMapping
 
 from ..load import get_processed_data_file
-from .models import WaterParcel, waterparcel_mapping
+from .models import WaterAccount, WaterParcel, waterparcel_mapping
 
 
 def from_shapefile(transaction_mode='autocommit', **kwargs):
@@ -21,3 +21,28 @@ def from_shapefile(transaction_mode='autocommit', **kwargs):
 
 def load(**kwargs):
     from_shapefile(**kwargs)
+
+
+def fix_water_accounts():
+    """Fix WaterAccount instances that point to old WaterParcels."""
+    old_accounts = WaterAccount.objects.filter(water_parcel__parcelid__isnull=True)
+    for water_account in old_accounts:
+        orig_parcel = water_account.water_parcel
+
+        try:
+            # Find new WaterParcel
+            new_parcel = WaterParcel.objects.get(parcelid=orig_parcel.parcel_id)
+
+            # Update new WaterParcel with missing data from old WaterParcel
+            for field in orig_parcel._meta.fields:
+                attrname = field.get_attname()
+                if not getattr(new_parcel, attrname):
+                    setattr(new_parcel, attrname, getattr(orig_parcel, attrname))
+            new_parcel.save()
+
+            # Point account to new parcel
+            water_account.water_parcel = new_parcel
+            water_account.save()
+        except WaterParcel.DoesNotExist:
+            print 'Could not find WaterParcel %s. Moving on.' % orig_parcel.parcel_id
+            continue
