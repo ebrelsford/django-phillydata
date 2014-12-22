@@ -14,6 +14,7 @@ class CityCouncilMemberForm(forms.ModelForm):
     )
 
     class Meta:
+        fields = '__all__'
         model = CityCouncilMember
 
 
